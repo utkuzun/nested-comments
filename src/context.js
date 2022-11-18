@@ -4,47 +4,47 @@ import { v4 as uuidv4 } from 'uuid'
 const AppContext = createContext()
 
 let initComments = {
-  1: {
-    likes: '5',
-    author: 'ahmet',
-    date: '15/12/2025',
-    isRoot: true,
-    parentNodeId: '',
-    context: 'awesome comment',
-    childrenComments: [
-      {
-        likes: '5',
-        author: 'kalim',
-        date: '15/12/2025',
-        isRoot: false,
-        parentNodeId: '1',
-        context: 'awesome comment',
-        childrenComments: [],
-        id: '2',
-      },
-    ],
-    id: '1',
-  },
-  2: {
-    likes: '5',
-    author: 'kalim',
-    date: '15/12/2025',
-    isRoot: false,
-    parentNodeId: '1',
-    context: 'awesome comment',
-    childrenComments: [],
-    id: '2',
-  },
-  3: {
-    likes: '5',
-    author: 'mehmet',
-    date: '15/12/2025',
-    isRoot: true,
-    parentNodeId: '',
-    context: 'awesome comment',
-    childrenComments: [],
-    id: '3',
-  },
+  //   1: {
+  //     likes: '5',
+  //     author: 'ahmet',
+  //     date: '15/12/2025',
+  //     isRoot: true,
+  //     parentNodeId: '',
+  //     context: 'awesome comment',
+  //     childrenComments: [
+  //       {
+  //         likes: '5',
+  //         author: 'kalim',
+  //         date: '15/12/2025',
+  //         isRoot: false,
+  //         parentNodeId: '1',
+  //         context: 'awesome comment',
+  //         childrenComments: [],
+  //         id: '2',
+  //       },
+  //     ],
+  //     id: '1',
+  //   },
+  //   2: {
+  //     likes: '5',
+  //     author: 'kalim',
+  //     date: '15/12/2025',
+  //     isRoot: false,
+  //     parentNodeId: '1',
+  //     context: 'awesome comment',
+  //     childrenComments: [],
+  //     id: '2',
+  //   },
+  //   3: {
+  //     likes: '5',
+  //     author: 'mehmet',
+  //     date: '15/12/2025',
+  //     isRoot: true,
+  //     parentNodeId: '',
+  //     context: 'awesome comment',
+  //     childrenComments: [],
+  //     id: '3',
+  //   },
 }
 
 const AppProvider = ({ children }) => {
@@ -66,18 +66,19 @@ const AppProvider = ({ children }) => {
 
   const addComment = ({ ...inputs }) => {
     const { parentNodeId } = inputs
-    console.log('parent', !parentNodeId)
     const newComment = craeteComment({ ...inputs })
 
     if (!parentNodeId) {
-      setComments({
+      const newComments = {
         ...comments,
         [newComment.id]: newComment,
-      })
+      }
+
+      setComments(newComments)
       return
     }
 
-    setComments({
+    const newComments = {
       ...comments,
       [newComment.id]: newComment,
       [newComment.parentNodeId]: {
@@ -87,7 +88,10 @@ const AppProvider = ({ children }) => {
           newComment,
         ],
       },
-    })
+    }
+
+    setComments(newComments)
+    setPage('home')
   }
 
   return (
