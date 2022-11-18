@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 const AppContext = createContext()
 
 let initComments = {
-  comm1: {
+  1: {
     likes: '5',
     author: 'ahmet',
     date: '15/12/2025',
@@ -24,7 +25,7 @@ let initComments = {
     ],
     id: '1',
   },
-  comm2: {
+  2: {
     likes: '5',
     author: 'kalim',
     date: '15/12/2025',
@@ -34,7 +35,7 @@ let initComments = {
     childrenComments: [],
     id: '2',
   },
-  comm3: {
+  3: {
     likes: '5',
     author: 'mehmet',
     date: '15/12/2025',
@@ -48,12 +49,58 @@ let initComments = {
 
 const AppProvider = ({ children }) => {
   const [comments, setComments] = useState(initComments)
-  const [user, setUser] = useState('')
-  const [page, setPage] = useState('login')
+  const [user, setUser] = useState('utku')
+  const [page, setPage] = useState('home')
+
+  const craeteComment = ({ ...inputs }) => {
+    const newComment = {
+      ...inputs,
+      id: uuidv4(),
+      date: 'of date',
+      author: user,
+      likes: 0,
+      childrenComments: [],
+    }
+    return newComment
+  }
+
+  const addComment = ({ ...inputs }) => {
+    const { parentNodeId } = inputs
+    console.log('parent', !parentNodeId)
+    const newComment = craeteComment({ ...inputs })
+
+    if (!parentNodeId) {
+      setComments({
+        ...comments,
+        [newComment.id]: newComment,
+      })
+      return
+    }
+
+    setComments({
+      ...comments,
+      [newComment.id]: newComment,
+      [newComment.parentNodeId]: {
+        ...comments[newComment.parentNodeId],
+        childrenComments: [
+          ...comments[newComment.parentNodeId].childrenComments,
+          newComment,
+        ],
+      },
+    })
+  }
 
   return (
     <AppContext.Provider
-      value={{ comments, setComments, page, setPage, user, setUser }}
+      value={{
+        comments,
+        setComments,
+        page,
+        setPage,
+        user,
+        setUser,
+        addComment,
+      }}
     >
       {children}
     </AppContext.Provider>

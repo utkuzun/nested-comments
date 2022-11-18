@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Comment = ({ comment }) => {
-  const { author, date, childrenComments, likes } = comment
+import AddComment from './AddComment'
 
-  console.log(childrenComments)
+const Comment = ({ comment }) => {
+  const { author, date, childrenComments, likes, id } = comment
 
   return (
-    <div>
+    <article className='comment-box'>
       <h4>{author}</h4>
       <p>{date}</p>
       <div>
@@ -15,7 +15,8 @@ const Comment = ({ comment }) => {
       {childrenComments.map((comment) => {
         return <Comment key={comment.id} comment={comment} />
       })}
-    </div>
+      <AddComment parentNodeId={id} isRoot={false} />
+    </article>
   )
 }
 

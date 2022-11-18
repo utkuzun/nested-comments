@@ -1,9 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const AddComment = () => {
+import { useGlobalContext } from '../context'
+
+const AddComment = ({ parentNodeId, isRoot }) => {
+  const [text, setText] = useState('')
+
+  const { addComment } = useGlobalContext()
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    addComment({ context: text, parentNodeId, isRoot })
+    setText('')
+  }
+
   return (
-    <form>
-      <input type='text' placeholder='Comment' />
+    <form onSubmit={onSubmit}>
+      <input
+        type='text'
+        placeholder='comment'
+        value={text}
+        onChange={({ target }) => setText(target.value)}
+      />
+      <button type='submit'>Add Comment</button>
     </form>
   )
 }

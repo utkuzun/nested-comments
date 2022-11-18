@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <main>
         <nav>
           <div className='links'>
             <button onClick={() => setPage('login')}>Login</button>
@@ -21,7 +21,7 @@ function App() {
           {user && <p>welcome {user}</p>}
         </nav>
         {page === 'login' ? <Login /> : <Home />}
-      </div>
+      </main>
     </>
   )
 }
