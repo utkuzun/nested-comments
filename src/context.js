@@ -5,7 +5,7 @@ const AppContext = createContext()
 
 let initComments = {
   //   1: {
-  //     likes: '5',
+  //     likes: 5,
   //     author: 'ahmet',
   //     date: '15/12/2025',
   //     isRoot: true,
@@ -13,7 +13,7 @@ let initComments = {
   //     context: 'awesome comment',
   //     childrenComments: [
   //       {
-  //         likes: '5',
+  //         likes: 5,
   //         author: 'kalim',
   //         date: '15/12/2025',
   //         isRoot: false,
@@ -26,7 +26,7 @@ let initComments = {
   //     id: '1',
   //   },
   //   2: {
-  //     likes: '5',
+  //     likes: 5,
   //     author: 'kalim',
   //     date: '15/12/2025',
   //     isRoot: false,
@@ -36,7 +36,7 @@ let initComments = {
   //     id: '2',
   //   },
   //   3: {
-  //     likes: '5',
+  //     likes: 5,
   //     author: 'mehmet',
   //     date: '15/12/2025',
   //     isRoot: true,
@@ -49,14 +49,25 @@ let initComments = {
 
 const AppProvider = ({ children }) => {
   const [comments, setComments] = useState(initComments)
-  const [user, setUser] = useState('utku')
-  const [page, setPage] = useState('home')
+  const [user, setUser] = useState('')
+  const [page, setPage] = useState('login')
+
+  const commentMapper = (comment) => {
+    return {
+      ...comment,
+      childrenComments: comment.childrenComments
+        .map((id) => comments[id])
+        .map((comment) => commentMapper(comment)),
+    }
+  }
 
   const craeteComment = ({ ...inputs }) => {
+    const date = new Date()
+
     const newComment = {
       ...inputs,
       id: uuidv4(),
-      date: 'of date',
+      date,
       author: user,
       likes: 0,
       childrenComments: [],
@@ -85,13 +96,18 @@ const AppProvider = ({ children }) => {
         ...comments[newComment.parentNodeId],
         childrenComments: [
           ...comments[newComment.parentNodeId].childrenComments,
-          newComment,
+          newComment.id,
         ],
       },
     }
 
     setComments(newComments)
-    setPage('home')
+  }
+
+  const upvoteComment = ({ id }) => {
+    const commentToUpvote = comments[id]
+    const newComment = { ...commentToUpvote, likes: commentToUpvote.likes + 1 }
+    setComments({ ...comments, [commentToUpvote.id]: newComment })
   }
 
   return (
@@ -104,6 +120,8 @@ const AppProvider = ({ children }) => {
         user,
         setUser,
         addComment,
+        upvoteComment,
+        commentMapper,
       }}
     >
       {children}

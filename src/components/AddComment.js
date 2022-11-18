@@ -5,11 +5,11 @@ import { useGlobalContext } from '../context'
 const AddComment = ({ parentNodeId, isRoot }) => {
   const [text, setText] = useState('')
 
-  const { addComment } = useGlobalContext()
+  const { addComment, user } = useGlobalContext()
 
   const onSubmit = (e) => {
     e.preventDefault()
-    addComment({ context: text, parentNodeId, isRoot })
+    addComment({ context: text, parentNodeId, isRoot, author: user })
     setText('')
   }
 

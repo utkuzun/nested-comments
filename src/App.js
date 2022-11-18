@@ -20,7 +20,7 @@ function App() {
           </div>
           {user && <p>welcome {user}</p>}
         </nav>
-        {page === 'login' ? <Login /> : <Home />}
+        {page === 'home' && user ? <Home /> : <Login />}
       </main>
     </>
   )

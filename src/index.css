@@ -50,11 +50,57 @@ main {
 }
 
 article {
-  border: 2px solid var(--clr-font);
+  border: 1px solid var(--clr-font);
+  border-radius: 0.2rem;
   padding: 1rem;
   margin: 25px 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  padding: 0 20%;
+  justify-content: space-between;
+}
+
+.links button {
+  margin: 0 0.5rem;
 }
 
 .App {
   width: 80%;
+}
+
+.score {
+  display: flex;
+  justify-content: flex-start;
+  gap: 25px;
+  border-bottom: 0.5px solid var(--clr-bck);
+  border-top: 0.5px solid var(--clr-bck);
+  width: 100%;
+}
+
+button {
+  color: #fff;
+  background-color: var(--clr-font);
+  padding: 0.1rem 0.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+label,
+input {
+  padding: 0.1rem 0.2rem;
+  margin: 0 0.2rem;
+}
+
+.show-reply {
+  cursor: pointer;
 }
