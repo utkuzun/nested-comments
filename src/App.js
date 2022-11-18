@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+
+import './App.css'
+import Login from './components/Login'
+import Home from './components/Home'
+
+import { useGlobalContext } from './context'
 
 function App() {
+  const { page, setPage, user } = useGlobalContext()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <div>
+        <nav>
+          <div className='links'>
+            <button onClick={() => setPage('login')}>Login</button>
+
+            <button onClick={() => setPage('home')}>Home</button>
+          </div>
+          {user && <p>welcome {user}</p>}
+        </nav>
+        {page === 'login' ? <Login /> : <Home />}
+      </div>
+    </>
+  )
 }
 
-export default App;
+export default App
