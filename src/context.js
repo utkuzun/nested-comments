@@ -50,7 +50,7 @@ let initComments = {
 const AppProvider = ({ children }) => {
   const [comments, setComments] = useState(initComments)
   const [user, setUser] = useState('')
-  const [page, setPage] = useState('login')
+  const [page, setPage] = useState('home')
 
   const commentMapper = (comment) => {
     return {
@@ -86,6 +86,7 @@ const AppProvider = ({ children }) => {
       }
 
       setComments(newComments)
+      window.localStorage.setItem('comments', JSON.stringify(newComments))
       return
     }
 
@@ -102,6 +103,7 @@ const AppProvider = ({ children }) => {
     }
 
     setComments(newComments)
+    window.localStorage.setItem('comments', JSON.stringify(newComments))
   }
 
   const upvoteComment = ({ id }) => {

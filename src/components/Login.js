@@ -8,6 +8,7 @@ const Login = () => {
 
   const onSubmit = () => {
     setUser(username)
+    window.localStorage.setItem('user', username)
     setPage('home')
   }
 

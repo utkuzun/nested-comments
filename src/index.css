@@ -104,3 +104,37 @@ input {
 .show-reply {
   cursor: pointer;
 }
+
+@media screen and (max-width: 650px) {
+  body {
+    font-size: 0.7rem;
+  }
+
+  button {
+    font-size: 0.7rem;
+    padding: 0.05rem 0.1rem;
+  }
+
+  input {
+    font-size: 0.7rem;
+
+    margin: 5px 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  body {
+    font-size: 0.4rem;
+  }
+
+  button {
+    font-size: 0.4rem;
+    padding: 0.05rem 0.1rem;
+  }
+
+  input {
+    font-size: 0.4rem;
+
+    margin: 3px 0;
+  }
+}

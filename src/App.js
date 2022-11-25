@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import './App.css'
 import Login from './components/Login'
@@ -7,7 +7,21 @@ import Home from './components/Home'
 import { useGlobalContext } from './context'
 
 function App() {
-  const { page, setPage, user } = useGlobalContext()
+  const { page, setPage, user, setUser, setComments } = useGlobalContext()
+
+  useEffect(() => {
+    const isUser = window.localStorage.getItem('user')
+    if (isUser) {
+      setUser(isUser)
+    }
+  }, [])
+
+  useEffect(() => {
+    const isComments = JSON.parse(window.localStorage.getItem('comments'))
+    if (isComments) {
+      setComments(isComments)
+    }
+  }, [])
 
   return (
     <>
